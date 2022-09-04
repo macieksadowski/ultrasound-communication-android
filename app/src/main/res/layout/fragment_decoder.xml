@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="pl.ms.ultrasound.ui.DecoderLog" />
+        <variable
+            name="log"
+            type="DecoderLog" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.EncoderFragment">
+
+
+        <Button
+            android:id="@+id/transmitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/start_listening"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/logsFieldDec"
+            android:layout_width="382dp"
+            android:layout_height="347dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="#F3F3F3"
+            android:gravity="bottom"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:text="@{log.message}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/figureFFT" />
+
+        <ImageView
+            android:id="@+id/figureFFT"
+            android:layout_width="381dp"
+            android:layout_height="176dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transmitBtn"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

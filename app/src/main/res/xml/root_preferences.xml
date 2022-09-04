@@ -1,0 +1,90 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:textColor="#00838F"
+        app:title="@string/commons_header">
+
+        <EditTextPreference
+            app:key="sampleRate"
+            app:title="@string/sample_rate_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="@integer/sampleRate"/>
+
+        <ListPreference
+
+            android:entries="@array/channels_entries"
+            android:entryValues="@array/channels_values"
+            android:key="noOfChannels"
+            android:title="@string/no_of_channels_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="8" />
+        <EditTextPreference
+            android:key="firstFreq"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/first_freq_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="@integer/firstFreq"/>
+        <EditTextPreference
+            android:key="freqStep"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/freq_step_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="@integer/freqStep"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="secded"
+            android:title="@string/secded_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/encoder_header">
+
+        <EditTextPreference
+            android:defaultValue="@fraction/tOnePulse"
+            android:enabled="true"
+            android:key="tOnePulse"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/t_one_sig_title"
+            app:enabled="true"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:defaultValue="@fraction/tOnePulse"
+            android:enabled="false"
+            android:key="tBreak"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/t_break_title"
+            app:enabled="true"
+            app:useSimpleSummaryProvider="true" />/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/decoder_header">
+
+        <EditTextPreference
+            android:defaultValue="12"
+            android:key="nfft"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/nfft_title"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:defaultValue="@integer/deltaF"
+            android:enabled="false"
+            android:key="deltaF"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/delta_f_title"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:key="threshold"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/threshold_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="@integer/threshold"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

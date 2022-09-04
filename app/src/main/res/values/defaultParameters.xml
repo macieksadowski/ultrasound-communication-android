@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="noOfChannels">8</integer>
+    <integer name="sampleRate">81920</integer>
+    <integer name="firstFreq">19000</integer>
+    <integer name="freqStep">50</integer>
+
+    <fraction name="tOnePulse">0.3</fraction>
+    <integer name="nfft">12</integer>
+    <integer name="deltaF">10</integer>
+    <integer name="threshold">1</integer>
+
+    <string name="hexMsgDefault">4D616369656A205361646F77736B6900</string>
+</resources>

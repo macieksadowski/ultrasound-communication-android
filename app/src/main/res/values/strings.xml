@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Ultrasound Communication</string>
+
+
+    <string name="hex_msg">Message to transmit (hexadecimal)</string>
+    <string name="transmitting">Transmitting…</string>
+    <string name="transmit">Transmit!</string>
+    <string name="title_activity_parameters">Parameters</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="commons_header">Commons</string>
+    <string name="encoder_header">Encoder (Send)</string>
+    <string name="decoder_header">Decoder (Receive)</string>
+    <string name="sync_header">Sync</string>
+
+
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Commons Preferences -->
+    <string name="no_of_channels_title">No. of transmission channels</string>
+    <string name="sample_rate_title">Sample rate</string>
+    <string name="first_freq_title">Frequency of the lowest channel [Hz]</string>
+    <string name="freq_step_title">Frequency step [Hz]</string>
+
+    <!-- Encoder Preferences -->
+    <string name="t_one_sig_title">Length of one pulse (in sec.)</string>
+    <string name="t_break_title">Length of break btw. pulses (in sec.)</string>
+
+    <!-- Decoder Preferences -->
+    <string name="nfft_title">Size of FFT (2^n, where n - input value)</string>
+    <string name="delta_f_title">Delta f</string>
+    <string name="threshold_title">Threshold</string>
+    <string name="start_listening">Start listening</string>
+    <string name="stop_listening">Stop listening</string>
+    <string name="secded_title">SECDED Coding</string>
+</resources>
