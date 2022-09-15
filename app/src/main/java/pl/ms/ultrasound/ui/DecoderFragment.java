@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
@@ -32,6 +35,9 @@ import java.util.Arrays;
 import pl.ms.ultrasound.Decoder;
 import pl.ms.ultrasound.R;
 import pl.ms.ultrasound.databinding.FragmentDecoderBinding;
+import ultrasound.AbstractCoder;
+import ultrasound.ControlCodes;
+import ultrasound.DataFrame;
 
 public class DecoderFragment extends Fragment {
 
@@ -44,6 +50,11 @@ public class DecoderFragment extends Fragment {
     Bitmap fftBitmap;
     Canvas fftCanvas;
     Paint fftPaint;
+    TextView cmdText;
+    TextView dataText;
+    byte receivedAddress;
+    byte receivedCommand;
+    byte[] receivedDataStr;
 
     Boolean updateFigures = false;
 
@@ -67,7 +78,7 @@ public class DecoderFragment extends Fragment {
         View view =  binding.getRoot();
         binding.setLog(DecoderLog.getInstance());
 
-        figureFft = view.findViewById(R.id.figureFFT);
+        //figureFft = view.findViewById(R.id.figureFFT);
         //bitmap is 10px taller than max signal height to show zero line
         //show usable FFT output
 
@@ -76,6 +87,8 @@ public class DecoderFragment extends Fragment {
         /* GUI Elements */
         TextView logsField = view.findViewById(R.id.logsFieldDec);
         logsField.setMovementMethod(new ScrollingMovementMethod());
+        cmdText = view.findViewById(R.id.cmdText);
+        dataText = view.findViewById(R.id.dataText);
 
         startStop = view.findViewById(R.id.transmitBtn);
         startStop.setOnClickListener(v -> {
@@ -87,6 +100,10 @@ public class DecoderFragment extends Fragment {
                 decoder.stopRecording();
                 decoderThread = null;
                 startStop.setText(R.string.start_listening);
+                cmdText.setText("CMD");
+                dataText.setText(null);
+                cmdText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cmd_field));
+                dataText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cmd_field));
 
             }
         });
@@ -124,6 +141,8 @@ public class DecoderFragment extends Fragment {
         double tBreak = Double.parseDouble(sharedPreferences.getString("tBreak", String.valueOf(0.5)));
         boolean secdedEnabled = sharedPreferences.getBoolean("secded",false);
 
+        AbstractCoder.CoderMode coderMode = AbstractCoder.CoderMode.valueOf(sharedPreferences.getString("coderMode","DATA_FRAME"));
+
         int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
         int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
         int bufferSize = AudioRecord.getMinBufferSize(sampleRate,
@@ -146,6 +165,8 @@ public class DecoderFragment extends Fragment {
             builder.secdedEnabled(secdedEnabled);
             builder.tOnePulse(tOnePulse);
 
+            builder.mode(coderMode);
+
             builder.audioRecord(audioRecord);
             builder.callback(new DecoderCallback() {
                 @Override
@@ -166,6 +187,15 @@ public class DecoderFragment extends Fragment {
                     updateFigures = true;
                     printFFT();
                 }
+
+                @Override
+                public void onDataFrameCorrReceived(byte address, byte command, byte[] dataStr) {
+
+                    receivedAddress = address;
+                    receivedCommand = command;
+                    receivedDataStr = dataStr;
+                    updateReceivedDataInfo();
+                }
             });
 
             decoder = builder.build();
@@ -176,11 +206,13 @@ public class DecoderFragment extends Fragment {
                 decoderThread.start();
                 DecoderLog.getInstance().clear();
 
+                /*
                 fftBitmap = Bitmap.createBitmap(decoder.getNfft() /2, 410, Bitmap.Config.ARGB_8888);
                 fftCanvas = new Canvas(fftBitmap);
                 fftPaint = new Paint();
                 fftPaint.setColor(Color.GREEN);
                 figureFft.setImageBitmap(fftBitmap);
+                */
 
             } else
                 throw new Exception("Failed to build Decoder object!");
@@ -192,6 +224,18 @@ public class DecoderFragment extends Fragment {
 
     }
 
+    private void updateReceivedDataInfo() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cmdText.setText(ControlCodes.getCodeNameByValue(receivedCommand));
+                dataText.setText(new String(receivedDataStr));
+                cmdText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cmd_field_green));
+                dataText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cmd_field_green));
+            }
+        });
+
+    }
 
 
 }

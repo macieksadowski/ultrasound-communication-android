@@ -70,6 +70,11 @@ public class DecoderTest {
             @Override
             public void updateFigures() {
             }
+
+            @Override
+            public void onDataFrameCorrReceived(byte address, byte command, byte[] dataStr) {
+
+            }
         });
 
         builder.audioDataForMock(audioSig);

@@ -8,4 +8,6 @@ public interface DecoderCallback {
 
     void updateFigures();
 
+    void onDataFrameCorrReceived(byte address, byte command, byte[] dataStr);
+
 }

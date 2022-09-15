@@ -2,6 +2,7 @@ package pl.ms.ultrasound.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.Menu;
@@ -19,6 +21,7 @@ import android.view.MenuItem;
 
 import pl.ms.ultrasound.R;
 import pl.ms.ultrasound.databinding.ActivityMainBinding;
+import ultrasound.AbstractCoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this);
+
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        AbstractCoder.CoderMode coderMode = AbstractCoder.CoderMode.valueOf(sharedPreferences.getString("coderMode","SIMPLE"));
+        sectionsPagerAdapter.setEncoderType(coderMode);
+
         ViewPager2 viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;

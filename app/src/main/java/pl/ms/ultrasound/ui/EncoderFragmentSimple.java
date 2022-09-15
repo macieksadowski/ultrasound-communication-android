@@ -18,17 +18,17 @@ import androidx.preference.PreferenceManager;
 import pl.ms.ultrasound.Encoder;
 import pl.ms.ultrasound.Encoder.EncoderBuilder;
 import pl.ms.ultrasound.R;
-import pl.ms.ultrasound.databinding.FragmentEncoderBinding;
+import pl.ms.ultrasound.databinding.FragmentEncoderSimpleBinding;
 
 
-public class EncoderFragment extends Fragment {
+public class EncoderFragmentSimple extends Fragment {
 
     private EncoderBuilder encoderBuilder;
     private Encoder encoder;
     private TextView logsField;
 
 
-    public EncoderFragment() {
+    public EncoderFragmentSimple() {
         // Required empty public constructor
     }
 
@@ -60,7 +60,7 @@ public class EncoderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentEncoderBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_encoder, container, false);
+        FragmentEncoderSimpleBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_encoder_simple, container, false);
 
         View view = binding.getRoot();
         binding.setLog(EncoderLog.getInstance());
@@ -96,7 +96,8 @@ public class EncoderFragment extends Fragment {
 
             String hexStr = messageField.getText().toString();
             if (!hexStr.isEmpty()) {
-                encoder.setHexData(hexStr);
+                EncoderLog.getInstance().clear();
+                encoder.setHexData(hexStr.toLowerCase());
                 encoder.run();
             }
         });

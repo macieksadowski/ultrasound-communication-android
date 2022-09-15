@@ -120,4 +120,13 @@ public class Decoder extends AbstractDecoder implements Runnable {
         DecoderLog.getInstance().setMessage(s);
     }
 
+    @Override
+    protected void onDataFrameSuccessfullyReceived(byte address, byte command, byte[] dataStr) {
+        super.onDataFrameSuccessfullyReceived(address, command, dataStr);
+
+        callback.onDataFrameCorrReceived(address, command, dataStr);
+    }
+
+
+
 }

@@ -37,6 +37,14 @@
             android:defaultValue="false"
             android:key="secded"
             android:title="@string/secded_title" />
+        <ListPreference
+
+            android:entries="@array/coder_mode_entries"
+            android:entryValues="@array/coder_mode_values"
+            android:key="coderMode"
+            android:title="@string/coder_mode_title"
+            app:useSimpleSummaryProvider="true"
+            android:defaultValue="DATA_FRAME" />
 
     </PreferenceCategory>
 

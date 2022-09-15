@@ -23,6 +23,8 @@
     <string name="sample_rate_title">Sample rate</string>
     <string name="first_freq_title">Frequency of the lowest channel [Hz]</string>
     <string name="freq_step_title">Frequency step [Hz]</string>
+    <string name="secded_title">SECDED Coding</string>
+    <string name="coder_mode_title">Coder mode</string>
 
     <!-- Encoder Preferences -->
     <string name="t_one_sig_title">Length of one pulse (in sec.)</string>
@@ -34,5 +36,7 @@
     <string name="threshold_title">Threshold</string>
     <string name="start_listening">Start listening</string>
     <string name="stop_listening">Stop listening</string>
-    <string name="secded_title">SECDED Coding</string>
+    <string name="cmd_label">Command to send</string>
+    <string name="msg_label">Text message (ASCII)</string>
+
 </resources>

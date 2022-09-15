@@ -17,7 +17,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.EncoderFragment">
+        tools:context=".ui.EncoderFragmentSimple">
 
 
         <Button
@@ -45,19 +45,43 @@
             android:text="@{log.message}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/figureFFT" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/figureFFT"
-            android:layout_width="381dp"
-            android:layout_height="176dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+        <TextView
+            android:id="@+id/cmdText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/cmd_field"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="8dp"
+            android:text="CMD"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toTopOf="@+id/logsFieldDec"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/transmitBtn"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toBottomOf="@+id/transmitBtn" />
+
+        <TextView
+            android:id="@+id/dataText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/cmd_field"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="8dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toTopOf="@+id/logsFieldDec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toEndOf="@+id/cmdText"
+            app:layout_constraintTop_toBottomOf="@+id/transmitBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
