@@ -5,16 +5,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.Shape;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,8 +31,8 @@ import pl.ms.ultrasound.Decoder;
 import pl.ms.ultrasound.R;
 import pl.ms.ultrasound.databinding.FragmentDecoderBinding;
 import ultrasound.AbstractCoder;
-import ultrasound.ControlCodes;
-import ultrasound.DataFrame;
+import ultrasound.dataframe.ControlCodes;
+
 
 public class DecoderFragment extends Fragment {
 

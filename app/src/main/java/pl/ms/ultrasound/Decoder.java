@@ -14,7 +14,7 @@ import java.util.List;
 import pl.ms.ultrasound.ui.DecoderCallback;
 import pl.ms.ultrasound.ui.DecoderLog;
 import ultrasound.AbstractDecoder;
-import ultrasound.CircularBuffer;
+import ultrasound.utils.CircularBuffer;
 
 
 public class Decoder extends AbstractDecoder implements Runnable {
@@ -26,16 +26,16 @@ public class Decoder extends AbstractDecoder implements Runnable {
 
     private RecorderThread recorder;
     private Thread recorderThread;
+    protected boolean audioRecorderRunning;
 
 
-    Decoder(DecoderBuilder builder) throws Exception {
+    protected Decoder(DecoderBuilder builder) throws Exception {
         super(builder);
 
         this.buffer = new CircularBuffer<>(64);
 
         this.recorder = new RecorderThread(builder.audioRecord,buffer,N,sampleRate);
-        this.recorderThread = new Thread(recorder);
-        this.recorderThread.setName("Recorder Thread");
+        audioRecorderRunning = false;
 
         this.callback = builder.callback;
 
@@ -85,19 +85,33 @@ public class Decoder extends AbstractDecoder implements Runnable {
 
     }
 
+    public boolean isAudioRecorderRunning() {
+        return audioRecorderRunning;
+    }
+
     protected void startRecording() {
+        if(!isAudioRecorderRunning()) {
+            startAudioRecorder();
+        }
         recorderThread.start();
     }
 
-    @Override
-    protected void closeRecorder() {
+    private void startAudioRecorder() {
+        recorderThread = new Thread(recorder);
+        recorderThread.setName("Recorder Thread");
+        audioRecorderRunning = true;
+    }
+
+    protected void stopAudioRecorder() {
+
         recorder.stop();
         try {
-            recorderThread.join();
+            recorderThread.join(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         recorderThread = null;
+        audioRecorderRunning = false;
     }
 
     @Override
@@ -121,10 +135,8 @@ public class Decoder extends AbstractDecoder implements Runnable {
     }
 
     @Override
-    protected void onDataFrameSuccessfullyReceived(byte address, byte command, byte[] dataStr) {
-        super.onDataFrameSuccessfullyReceived(address, command, dataStr);
-
-        callback.onDataFrameCorrReceived(address, command, dataStr);
+    protected void onDataFrameSuccessfullyReceived() {
+        callback.onDataFrameCorrReceived(frame.getReceiverAddress(), frame.getCommand(), frame.getData());
     }
 
 

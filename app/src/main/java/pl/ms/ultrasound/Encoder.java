@@ -23,12 +23,6 @@ public class Encoder extends AbstractEncoder implements Runnable {
 		this.callback = builder.callback;
 	}
 
-    @Override
-    protected void logMessage(String s) {
-        Log.i(TAG,s);
-        EncoderLog.getInstance().setMessage(s);
-    }
-
     public static class EncoderBuilder extends AbstractEncoderBuilder {
 
 	    private EncoderCallback callback;
@@ -101,4 +95,11 @@ public class Encoder extends AbstractEncoder implements Runnable {
         track.release();
         track = null;
     }
+
+    @Override
+    protected void logMessage(String s) {
+        Log.i(TAG,s);
+        EncoderLog.getInstance().setMessage(s);
+    }
+
 }

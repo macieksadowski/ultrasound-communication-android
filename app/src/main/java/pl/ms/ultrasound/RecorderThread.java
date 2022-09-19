@@ -1,7 +1,6 @@
 package pl.ms.ultrasound;
 
 import android.media.AudioRecord;
-import android.util.Log;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -10,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.ms.ultrasound.ui.DecoderLog;
-import ultrasound.CircularBuffer;
+import ultrasound.utils.CircularBuffer;
 
 public class RecorderThread implements Runnable {
 
@@ -22,7 +21,7 @@ public class RecorderThread implements Runnable {
     private int sampleRate;
     private boolean isRunning;
 
-    public RecorderThread(AudioRecord audioRecord,CircularBuffer<List<Short>> buffer,int N, int fs) {
+    public RecorderThread(AudioRecord audioRecord, CircularBuffer<List<Short>> buffer, int N, int fs) {
         this.audioRecord = audioRecord;
         this.buffer = buffer;
         this.N = N;
@@ -54,9 +53,12 @@ public class RecorderThread implements Runnable {
             //DecoderLog.getInstance().setMessage("REC","Recording time: " + duration);
             watch.reset();
 
-
-            while(buffer.isFull()) {
-                DecoderLog.getInstance().setMessage("REC","Buffer is full!");
+            boolean communicate = false;
+            while (buffer.isFull() && isRunning) {
+                if (!communicate) {
+                    DecoderLog.getInstance().setMessage("REC", "Buffer is full!");
+                    communicate = true;
+                }
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -66,6 +68,10 @@ public class RecorderThread implements Runnable {
 
         }
         audioRecord.stop();
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public void stop() {

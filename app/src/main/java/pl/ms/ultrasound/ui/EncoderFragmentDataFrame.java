@@ -31,8 +31,10 @@ import pl.ms.ultrasound.Encoder.EncoderBuilder;
 import pl.ms.ultrasound.R;
 import pl.ms.ultrasound.databinding.FragmentEncoderDataframeBinding;
 import ultrasound.AbstractCoder;
-import ultrasound.ControlCodes;
-import ultrasound.DataFrame;
+import ultrasound.dataframe.ControlCodes;
+import ultrasound.dataframe.DataFrame;
+import ultrasound.dataframe.IAsciiControlCodes;
+import ultrasound.dataframe.IDataFrame;
 
 
 public class EncoderFragmentDataFrame extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -152,7 +154,7 @@ public class EncoderFragmentDataFrame extends Fragment implements AdapterView.On
 
         transmit.setOnClickListener(v -> {
 
-            DataFrame frame = dataFrameBuilder.build();
+            IDataFrame frame = dataFrameBuilder.build();
             if(frame != null) {
                 EncoderLog.getInstance().clear();
                 encoder.setDataFrame(frame);
@@ -182,7 +184,7 @@ public class EncoderFragmentDataFrame extends Fragment implements AdapterView.On
         Byte command = commands.get(commandStr);
         if(command != null) {
             dataFrameBuilder.command(command);
-            boolean textMessage = command == ControlCodes.STX;
+            boolean textMessage = command == IAsciiControlCodes.STX;
             messageField.setEnabled(textMessage);
             transmit.setEnabled(!textMessage);
             if(textMessage) {
@@ -200,17 +202,17 @@ public class EncoderFragmentDataFrame extends Fragment implements AdapterView.On
 
     private HashMap<String, Byte> getAvailableCommands() {
         HashMap<String, Byte> cmds = new HashMap<>();
-        cmds.put("Text message", ControlCodes.STX);
-        cmds.put("Enquiry", ControlCodes.ENQ);
-        cmds.put("Acknowledge", ControlCodes.ACK);
-        cmds.put("Bell", ControlCodes.BEL);
-        cmds.put("Device Control 1", ControlCodes.DC1);
-        cmds.put("Device Control 2", ControlCodes.DC2);
-        cmds.put("Device Control 3", ControlCodes.DC3);
-        cmds.put("Device Control 4", ControlCodes.DC4);
-        cmds.put("Negative Acknowledge", ControlCodes.NAK);
-        cmds.put("Synchronize", ControlCodes.SYN);
-        cmds.put("Cancel", ControlCodes.CAN);
+        cmds.put("Text message", IAsciiControlCodes.STX);
+        cmds.put("Enquiry", IAsciiControlCodes.ENQ);
+        cmds.put("Acknowledge", IAsciiControlCodes.ACK);
+        cmds.put("Bell", IAsciiControlCodes.BEL);
+        cmds.put("Device Control 1", IAsciiControlCodes.DC1);
+        cmds.put("Device Control 2", IAsciiControlCodes.DC2);
+        cmds.put("Device Control 3", IAsciiControlCodes.DC3);
+        cmds.put("Device Control 4", IAsciiControlCodes.DC4);
+        cmds.put("Negative Acknowledge", IAsciiControlCodes.NAK);
+        cmds.put("Synchronize", IAsciiControlCodes.SYN);
+        cmds.put("Cancel", IAsciiControlCodes.CAN);
 
         return cmds;
     }
